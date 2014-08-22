@@ -1,6 +1,7 @@
 package pkt.geoquiz;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +18,7 @@ public class QuizActivity extends Activity {
 	private Button mFalseButton;
 	private ImageButton mNextButton;
 	private ImageButton mPrevButton;
+	private Button mCheatButton;
 	private TextView mQuestionTextView;
 	private static final String TAG = "QuizActivity";
 	private static final String KEY_INDEX = "index";
@@ -34,6 +36,18 @@ public class QuizActivity extends Activity {
 		mQuestionTextView.setText(question);
 	}
 
+	private void showToast(boolean answer) {
+		if (answer == mQuestionBank[mCurrentIndex].isTrueQuestion()) {
+			Toast.makeText(QuizActivity.this,
+					R.string.correct_toast,
+					Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(QuizActivity.this,
+					R.string.incorrect_toast,
+					Toast.LENGTH_SHORT).show();
+		}
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,9 +62,7 @@ public class QuizActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(QuizActivity.this,
-						R.string.incorrect_toast,
-						Toast.LENGTH_SHORT).show();
+				showToast(true);
 			}
 		});
 		
@@ -60,10 +72,7 @@ public class QuizActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(QuizActivity.this,
-						R.string.correct_toast,
-						Toast.LENGTH_SHORT).show();
-				
+				showToast(false);
 			}
 		});
 		
@@ -86,6 +95,18 @@ public class QuizActivity extends Activity {
 				// TODO Auto-generated method stub
 				mCurrentIndex = (mCurrentIndex + mQuestionBank.length - 1) % mQuestionBank.length;
 				updateQuestion();
+			}
+		});
+		
+		mCheatButton = (Button)findViewById(R.id.cheat_button);
+		mCheatButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Start CheatActivity
+				Intent i = new Intent(QuizActivity.this, CheatActivity.class);
+				boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
+				i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
+				startActivity(i);
 			}
 		});
 
