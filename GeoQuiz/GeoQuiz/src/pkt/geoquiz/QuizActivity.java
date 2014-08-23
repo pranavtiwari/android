@@ -1,5 +1,6 @@
 package pkt.geoquiz;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class QuizActivity extends Activity {
 	private TextView mQuestionTextView;
 	private static final String TAG = "QuizActivity";
 	private static final String KEY_INDEX = "index";
+	private int messageResId;
 	
 	private TrueFalse[] mQuestionBank = new TrueFalse[] {
 			new TrueFalse(R.string.question_const, false),
@@ -31,28 +33,39 @@ public class QuizActivity extends Activity {
 	
 	private int mCurrentIndex = 0;
 	
+	private boolean mIsCheater;
+	
 	private void updateQuestion() {
 		int question = mQuestionBank[mCurrentIndex].getQuestion();
 		mQuestionTextView.setText(question);
+		mIsCheater = false;
 	}
 
-	private void showToast(boolean answer) {
-		if (answer == mQuestionBank[mCurrentIndex].isTrueQuestion()) {
-			Toast.makeText(QuizActivity.this,
-					R.string.correct_toast,
-					Toast.LENGTH_SHORT).show();
+	private void checkAnswer(boolean answer) {
+		if (mIsCheater) {
+			messageResId = R.string.judgement_toast;
 		} else {
-			Toast.makeText(QuizActivity.this,
-					R.string.incorrect_toast,
-					Toast.LENGTH_SHORT).show();
+			if (answer == mQuestionBank[mCurrentIndex].isTrueQuestion()) {
+				messageResId = R.string.correct_toast;
+			} else {
+				messageResId = R.string.incorrect_toast;
+			}
 		}
+		Toast.makeText(QuizActivity.this,
+				messageResId,
+				Toast.LENGTH_SHORT).show();
+
 	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d(TAG, "onCreate() called.");
 		setContentView(R.layout.activity_quiz);
 		
+		ActionBar actionBar = getActionBar();
+		actionBar.setSubtitle("Bodies of Water");
+			
 		mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
 		updateQuestion();
 		
@@ -62,7 +75,7 @@ public class QuizActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showToast(true);
+				checkAnswer(true);
 			}
 		});
 		
@@ -72,7 +85,7 @@ public class QuizActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showToast(false);
+				checkAnswer(false);
 			}
 		});
 		
@@ -106,7 +119,7 @@ public class QuizActivity extends Activity {
 				Intent i = new Intent(QuizActivity.this, CheatActivity.class);
 				boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
 				i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
-				startActivity(i);
+				startActivityForResult(i, 0);
 			}
 		});
 
@@ -127,6 +140,14 @@ public class QuizActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.quiz, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		if (data == null) {
+			return;
+		}
+		mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
 	}
 
 }
