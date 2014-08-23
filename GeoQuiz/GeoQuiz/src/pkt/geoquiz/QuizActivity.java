@@ -21,8 +21,10 @@ public class QuizActivity extends Activity {
 	private ImageButton mPrevButton;
 	private Button mCheatButton;
 	private TextView mQuestionTextView;
+	
 	private static final String TAG = "QuizActivity";
 	private static final String KEY_INDEX = "index";
+	
 	private int messageResId;
 	
 	private TrueFalse[] mQuestionBank = new TrueFalse[] {
