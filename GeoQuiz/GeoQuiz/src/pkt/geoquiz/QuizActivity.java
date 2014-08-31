@@ -22,10 +22,10 @@ public class QuizActivity extends Activity {
 	private Button mCheatButton;
 	private TextView mQuestionTextView;
 	
+	private int messageResId;
+	
 	private static final String TAG = "QuizActivity";
 	private static final String KEY_INDEX = "index";
-	
-	private int messageResId;
 	
 	private TrueFalse[] mQuestionBank = new TrueFalse[] {
 			new TrueFalse(R.string.question_const, false),
