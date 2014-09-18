@@ -33,7 +33,8 @@ public class PredictionListFragment extends ListFragment {
 		
 		// Start PredictionActivity
 		Intent i = new Intent(getActivity(), PredictionActivity.class);
-		// i.putExtra(PredictionFragment.EXTRA_PREDICTION_ID, p.getId());
+		i.putExtra(PredictionFragment.EXTRA_PREDICTION_ID, p.getId());
+		Log.d(TAG, p.getId().toString());
 		startActivity(i);
 	}
 

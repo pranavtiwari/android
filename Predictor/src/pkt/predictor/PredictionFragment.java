@@ -28,8 +28,11 @@ public class PredictionFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "OnCreate");
 		super.onCreate(savedInstanceState);
-		mPrediction = new Prediction();
-		UUID predictionId = (UUID)getActivity().getIntent().getSerializableExtra(EXTRA_PREDICTION_ID);
+
+		UUID predictionId = (UUID)(getActivity().getIntent().getSerializableExtra(EXTRA_PREDICTION_ID));
+		Log.d(TAG, predictionId.toString());
+		mPrediction = PredictionLab.get(getActivity()).getPrediction(predictionId);
+
 //		UUID predictionId = (UUID)getArguments().getSerializable(EXTRA_PREDICTION_ID);
 // 		mPrediction = PredictionLab.get(getActivity()).getPrediction(predictionId);
 	}

@@ -30,7 +30,7 @@ public class PredictionLab {
 	
 	public Prediction getPrediction(UUID id) {
 		for (Prediction p : mPredictions) {
-			if (p.getId() == id) {
+			if (p.getId().equals(id)) {
 				return p;
 			}
 		}
