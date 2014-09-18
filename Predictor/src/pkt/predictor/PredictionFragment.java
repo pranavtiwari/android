@@ -28,8 +28,10 @@ public class PredictionFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "OnCreate");
 		super.onCreate(savedInstanceState);
-		UUID predictionId = (UUID)getArguments().getSerializable(EXTRA_PREDICTION_ID);
-		mPrediction = PredictionLab.get(getActivity()).getPrediction(predictionId);
+		mPrediction = new Prediction();
+		UUID predictionId = (UUID)getActivity().getIntent().getSerializableExtra(EXTRA_PREDICTION_ID);
+//		UUID predictionId = (UUID)getArguments().getSerializable(EXTRA_PREDICTION_ID);
+// 		mPrediction = PredictionLab.get(getActivity()).getPrediction(predictionId);
 	}
 	
 	@Override
@@ -55,13 +57,12 @@ public class PredictionFragment extends Fragment {
 		return v;
 	}
 
-	public static PredictionFragment newInstance(UUID id) {
-		Bundle args = new Bundle();
-		args.putSerializable(EXTRA_PREDICTION_ID, id);
-		PredictionFragment fragment = new PredictionFragment();
-		fragment.setArguments(args);
-		return fragment;
-	}	
-
+//	public static PredictionFragment newInstance(UUID id) {
+//		Bundle args = new Bundle();
+//		args.putSerializable(EXTRA_PREDICTION_ID, id);
+//		PredictionFragment fragment = new PredictionFragment();
+//		fragment.setArguments(args);
+//		return fragment;
+//	}
 
 }

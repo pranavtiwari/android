@@ -9,8 +9,10 @@ public class PredictionActivity extends SingleFragmentActivity {
 
 	@Override
 	protected Fragment createFragment() {
-		UUID predictionId = (UUID)getIntent()
-				.getSerializableExtra(PredictionFragment.EXTRA_PREDICTION_ID);
-		return PredictionFragment.newInstance(predictionId);
+		return new PredictionFragment();
+		
+//		UUID predictionId = (UUID)getIntent()
+//				.getSerializableExtra(PredictionFragment.EXTRA_PREDICTION_ID);
+//		return PredictionFragment.newInstance(predictionId);
 	}
 }
