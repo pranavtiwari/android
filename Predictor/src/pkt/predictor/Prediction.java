@@ -14,6 +14,11 @@ public class Prediction {
 		// Generate unique id
 		mId = UUID.randomUUID();
 	}
+	
+	@Override
+	public String toString() {
+		return mTicker + ": " + mThreshold;
+	}
 
 	public String getTicker() {
 		return mTicker;

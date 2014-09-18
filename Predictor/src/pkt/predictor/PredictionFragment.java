@@ -8,12 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+
 
 // Controller that interacts with model:Prediction and views:??
 public class PredictionFragment extends Fragment {
 	private Prediction mPrediction;
 	private EditText mTicker;
+	private Button mDateButton;
+	
 	private final String TAG = "PredictorFragment";
 	
 	@Override
@@ -37,6 +41,11 @@ public class PredictionFragment extends Fragment {
 			public void beforeTextChanged(CharSequence c, int start, int before, int count) {}
 			public void afterTextChanged(Editable c) {}
 		});
+		
+		mDateButton = (Button)v.findViewById(R.id.prediction_date);
+		mDateButton.setText(mPrediction.getDate().toString());
+		mDateButton.setEnabled(false);
+		
 		return v;
 	}
 
