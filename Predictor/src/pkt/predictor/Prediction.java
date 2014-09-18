@@ -8,11 +8,14 @@ public class Prediction {
 	private String mTicker;
 	private int mThreshold;
 	private int mComparison; // 0 : LT, 1 : GT, 2 : ==
-	private Date mDate;
+	private Date mTriggerDate;
+	private Date mCreationDate;
 	
 	public Prediction() {
 		// Generate unique id
 		mId = UUID.randomUUID();
+		mCreationDate = new Date();
+		mTriggerDate = new Date();
 	}
 	
 	@Override
@@ -44,12 +47,21 @@ public class Prediction {
 		mComparison = comparison;
 	}
 
-	public Date getDate() {
-		return mDate;
+	public Date getTriggerDate() {
+		return mTriggerDate;
 	}
 
-	public void setDate(Date date) {
-		mDate = date;
+	public void setTriggerDate(Date mTriggerDate) {
+		this.mTriggerDate = mTriggerDate;
+	}
+
+	public Date getCreationDate() {
+		return mCreationDate;
+	}
+
+	private void setCreationDate(Date mCreationDate) {
+		// Don't let anyone modify creation date
+		this.mCreationDate = mCreationDate;
 	}
 
 	public UUID getId() {

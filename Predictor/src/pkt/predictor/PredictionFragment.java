@@ -1,5 +1,7 @@
 package pkt.predictor;
 
+import java.util.UUID;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -20,11 +22,14 @@ public class PredictionFragment extends Fragment {
 	
 	private final String TAG = "PredictorFragment";
 	
+	public static final String EXTRA_PREDICTION_ID = "pkt.predictor.prediction_id";
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "OnCreate");
 		super.onCreate(savedInstanceState);
-		mPrediction = new Prediction();
+		UUID predictionId = (UUID)getArguments().getSerializable(EXTRA_PREDICTION_ID);
+		mPrediction = PredictionLab.get(getActivity()).getPrediction(predictionId);
 	}
 	
 	@Override
@@ -34,6 +39,7 @@ public class PredictionFragment extends Fragment {
 		View v = inflater.inflate(R.layout.fragment_prediction, parent, false);
 		
 		mTicker = (EditText)v.findViewById(R.id.prediction_title);
+		mTicker.setText(mPrediction.getTicker());
 		mTicker.addTextChangedListener(new TextWatcher() {
 			public void onTextChanged(CharSequence c, int start, int before, int count) {
 				mPrediction.setTicker(c.toString());
@@ -43,10 +49,19 @@ public class PredictionFragment extends Fragment {
 		});
 		
 		mDateButton = (Button)v.findViewById(R.id.prediction_date);
-		mDateButton.setText(mPrediction.getDate().toString());
+		mDateButton.setText(mPrediction.getTriggerDate().toString());
 		mDateButton.setEnabled(false);
 		
 		return v;
 	}
+
+	public static PredictionFragment newInstance(UUID id) {
+		Bundle args = new Bundle();
+		args.putSerializable(EXTRA_PREDICTION_ID, id);
+		PredictionFragment fragment = new PredictionFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}	
+
 
 }
