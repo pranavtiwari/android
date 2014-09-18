@@ -56,8 +56,8 @@ public class PredictionListFragment extends ListFragment {
 			TextView titleTextView = (TextView)convertView.findViewById(R.id.prediction_list_item_titleTextView);
 			titleTextView.setText(p.getTicker());
 			
-//			TextView dateTextView = (TextView)convertView.findViewById(R.id.prediction_list_item_dateTextView);
-//			dateTextView.setText(p.getDate().toString());
+			TextView dateTextView = (TextView)convertView.findViewById(R.id.prediction_list_item_dateTextView);
+			dateTextView.setText(p.getCreationDate().toString());
 			
 			return convertView;
 		}
