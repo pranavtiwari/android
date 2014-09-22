@@ -22,6 +22,10 @@ public class Prediction {
 	public String toString() {
 		return mTicker + ": " + mThreshold;
 	}
+	
+	public String getTitle() {
+		return mTicker + ": " + mThreshold;
+	}
 
 	public String getTicker() {
 		return mTicker;

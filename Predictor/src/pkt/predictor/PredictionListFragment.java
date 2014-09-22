@@ -29,14 +29,21 @@ public class PredictionListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Prediction p = ((PredictionAdapter)getListAdapter()).getItem(position);
-		Log.d(TAG, p.getTicker() + " clicked");
+		Log.d(TAG, p.getTitle() + " clicked");
 		
 		// Start PredictionActivity
-		Intent i = new Intent(getActivity(), PredictionActivity.class);
+		Intent i = new Intent(getActivity(), PredictionPagerActivity.class);
 		i.putExtra(PredictionFragment.EXTRA_PREDICTION_ID, p.getId());
 		Log.d(TAG, p.getId().toString());
 		startActivity(i);
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		((PredictionAdapter)getListAdapter()).notifyDataSetChanged();
+	}
+
 
 	private class PredictionAdapter extends ArrayAdapter<Prediction> {
 		public PredictionAdapter(ArrayList<Prediction> predictions) {
@@ -55,7 +62,7 @@ public class PredictionListFragment extends ListFragment {
 			Prediction p = getItem(position);
 			
 			TextView titleTextView = (TextView)convertView.findViewById(R.id.prediction_list_item_titleTextView);
-			titleTextView.setText(p.getTicker());
+			titleTextView.setText(p.getTitle());
 			
 			TextView dateTextView = (TextView)convertView.findViewById(R.id.prediction_list_item_dateTextView);
 			dateTextView.setText(p.getCreationDate().toString());

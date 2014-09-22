@@ -7,5 +7,7 @@
     <string name="prediction_title_label">Title</string>
     <string name="prediction_details_label">Details</string>
     <string name="prediction_title">Predictions</string>
+    <string name="trigger_date">Trigger date?</string>
+    <string name="creation_date">Creation Date?</string>
 
 </resources>
